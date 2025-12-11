@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const CircuitBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -7,7 +7,7 @@ const CircuitBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resizeCanvas = () => {
@@ -16,10 +16,15 @@ const CircuitBackground = () => {
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
     // Circuit nodes
-    const nodes: { x: number; y: number; connections: number[]; pulse: number }[] = [];
+    const nodes: {
+      x: number;
+      y: number;
+      connections: number[];
+      pulse: number;
+    }[] = [];
     const nodeCount = 30;
 
     for (let i = 0; i < nodeCount; i++) {
@@ -38,18 +43,18 @@ const CircuitBackground = () => {
           index: j,
           dist: Math.hypot(other.x - node.x, other.y - node.y),
         }))
-        .filter(d => d.index !== i && d.dist < 250)
+        .filter((d) => d.index !== i && d.dist < 250)
         .sort((a, b) => a.dist - b.dist)
         .slice(0, 3);
-      
-      node.connections = distances.map(d => d.index);
+
+      node.connections = distances.map((d) => d.index);
     });
 
     // Data packets
-    const packets: { 
-      fromNode: number; 
-      toNode: number; 
-      progress: number; 
+    const packets: {
+      fromNode: number;
+      toNode: number;
+      progress: number;
       speed: number;
     }[] = [];
 
@@ -57,7 +62,8 @@ const CircuitBackground = () => {
       const fromNode = Math.floor(Math.random() * nodes.length);
       const node = nodes[fromNode];
       if (node.connections.length > 0) {
-        const toNode = node.connections[Math.floor(Math.random() * node.connections.length)];
+        const toNode =
+          node.connections[Math.floor(Math.random() * node.connections.length)];
         packets.push({
           fromNode,
           toNode,
@@ -77,17 +83,17 @@ const CircuitBackground = () => {
 
     const animate = () => {
       time += 0.01;
-      ctx.fillStyle = 'rgba(12, 12, 20, 0.1)';
+      ctx.fillStyle = "rgba(12, 12, 20, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw connections
       nodes.forEach((node, i) => {
-        node.connections.forEach(j => {
+        node.connections.forEach((j) => {
           const other = nodes[j];
           ctx.beginPath();
           ctx.moveTo(node.x, node.y);
           ctx.lineTo(other.x, other.y);
-          ctx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
+          ctx.strokeStyle = "rgba(0, 240, 255, 0.1)";
           ctx.lineWidth = 1;
           ctx.stroke();
         });
@@ -97,7 +103,7 @@ const CircuitBackground = () => {
       nodes.forEach((node, i) => {
         node.pulse += 0.02;
         const glow = Math.sin(node.pulse) * 0.3 + 0.7;
-        
+
         ctx.beginPath();
         ctx.arc(node.x, node.y, 3, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0, 240, 255, ${glow})`;
@@ -113,12 +119,15 @@ const CircuitBackground = () => {
       // Draw and update packets
       packets.forEach((packet, i) => {
         packet.progress += packet.speed;
-        
+
         if (packet.progress >= 1) {
           packet.fromNode = packet.toNode;
           const node = nodes[packet.fromNode];
           if (node.connections.length > 0) {
-            packet.toNode = node.connections[Math.floor(Math.random() * node.connections.length)];
+            packet.toNode =
+              node.connections[
+                Math.floor(Math.random() * node.connections.length)
+              ];
             packet.progress = 0;
           }
         }
@@ -130,10 +139,10 @@ const CircuitBackground = () => {
 
         // Packet glow
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, 15);
-        gradient.addColorStop(0, 'rgba(0, 240, 255, 0.8)');
-        gradient.addColorStop(0.5, 'rgba(255, 0, 170, 0.3)');
-        gradient.addColorStop(1, 'transparent');
-        
+        gradient.addColorStop(0, "rgba(0, 240, 255, 0.8)");
+        gradient.addColorStop(0.5, "rgba(255, 0, 170, 0.3)");
+        gradient.addColorStop(1, "transparent");
+
         ctx.beginPath();
         ctx.arc(x, y, 15, 0, Math.PI * 2);
         ctx.fillStyle = gradient;
@@ -142,7 +151,7 @@ const CircuitBackground = () => {
         // Core
         ctx.beginPath();
         ctx.arc(x, y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = '#00F0FF';
+        ctx.fillStyle = "#00F0FF";
         ctx.fill();
       });
 
@@ -157,7 +166,7 @@ const CircuitBackground = () => {
     animate();
 
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationId);
     };
   }, []);

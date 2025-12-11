@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import GlitchText from './GlitchText';
-import { Shield, Lock, Zap } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import GlitchText from "./GlitchText";
+import { Shield, Lock, Zap } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -11,14 +11,14 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-radial from-neon-cyan/5 via-transparent to-transparent" />
       <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-neon-pink/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl" />
-      
+
       {/* Radar scan effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] opacity-20">
         <div className="absolute inset-0 border border-primary/30 rounded-full" />
         <div className="absolute inset-8 border border-primary/20 rounded-full" />
         <div className="absolute inset-16 border border-primary/10 rounded-full" />
         <div className="absolute inset-0 radar-scan">
-          <div className="w-1/2 h-1/2 bg-gradient-conic from-primary/40 via-transparent to-transparent origin-bottom-right" />
+          <div className="w-full h-full rounded-full bg-gradient-conic from-primary/40 via-transparent to-transparent origin-bottom-right" />
         </div>
       </div>
 
@@ -37,14 +37,16 @@ const HeroSection = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm text-primary font-mono">Zero-Knowledge Protocol</span>
+            <span className="text-sm text-primary font-mono">
+              Zero-Knowledge Protocol
+            </span>
           </motion.div>
 
           {/* Main title */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
             <GlitchText text="ZKFund" className="gradient-text" />
           </h1>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -60,8 +62,8 @@ const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Private governance, anonymous voting, and zero-knowledge fund management 
-            for institutions, DAOs, and trading desks.
+            Private governance, anonymous voting, and zero-knowledge fund
+            management for institutions, DAOs, and trading desks.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -90,9 +92,9 @@ const HeroSection = () => {
             className="grid grid-cols-3 gap-8 mt-20 max-w-2xl mx-auto"
           >
             {[
-              { icon: Shield, label: 'Private Votes', value: '100%' },
-              { icon: Lock, label: 'ZK Proofs', value: 'SNARK' },
-              { icon: Zap, label: 'Execution', value: 'Instant' },
+              { icon: Shield, label: "Private Votes", value: "100%" },
+              { icon: Lock, label: "ZK Proofs", value: "SNARK" },
+              { icon: Zap, label: "Execution", value: "Instant" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -102,7 +104,9 @@ const HeroSection = () => {
                 className="text-center"
               >
                 <stat.icon className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                <p className="text-2xl font-bold text-foreground">
+                  {stat.value}
+                </p>
                 <p className="text-sm text-muted-foreground">{stat.label}</p>
               </motion.div>
             ))}
