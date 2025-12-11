@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, FileText, Github, MessageCircle } from 'lucide-react';
 
@@ -60,9 +61,11 @@ const CTASection = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
           >
-            <Button variant="glow" size="xl">
+            <Button variant="glow" size="xl" asChild>
+              <Link to="/dashboard">
               Launch App
-              <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
             <Button variant="outline" size="xl">
               <FileText className="w-5 h-5" />

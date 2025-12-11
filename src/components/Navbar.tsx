@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
@@ -62,8 +63,10 @@ const Navbar = () => {
               <Button variant="ghost" size="sm">
                 Connect Wallet
               </Button>
-              <Button variant="neon" size="sm">
-                Launch App
+              <Button variant="neon" size="sm" asChild>
+                <Link to="/dashboard">
+                  Launch App
+                </Link>
               </Button>
             </div>
 
@@ -107,8 +110,10 @@ const Navbar = () => {
                   <Button variant="outline" size="lg" className="w-full">
                     Connect Wallet
                   </Button>
-                  <Button variant="glow" size="lg" className="w-full">
-                    Launch App
+                  <Button variant="glow" size="lg" className="w-full" asChild>
+                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                      Launch App
+                    </Link>
                   </Button>
                 </div>
               </div>
