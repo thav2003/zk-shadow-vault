@@ -1,16 +1,16 @@
-import { motion } from 'framer-motion';
-import { 
-  LayoutDashboard, 
-  Wallet, 
-  FileText, 
-  Vote, 
-  ArrowLeftRight, 
+import { motion } from "framer-motion";
+import {
+  LayoutDashboard,
+  Wallet,
+  FileText,
+  Vote,
+  ArrowLeftRight,
   Settings,
   ChevronLeft,
-  Shield
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import type { DashboardTab } from '@/pages/Dashboard';
+  Shield,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import type { DashboardTab } from "@/pages/Dashboard";
 
 interface DashboardSidebarProps {
   activeTab: DashboardTab;
@@ -20,15 +20,20 @@ interface DashboardSidebarProps {
 }
 
 const menuItems = [
-  { id: 'overview', label: 'Overview', icon: LayoutDashboard },
-  { id: 'funds', label: 'ZK Funds', icon: Wallet },
-  { id: 'proposals', label: 'Proposals', icon: FileText },
-  { id: 'voting', label: 'Voting', icon: Vote },
-  { id: 'transactions', label: 'Transactions', icon: ArrowLeftRight },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "funds", label: "ZK Funds", icon: Wallet },
+  { id: "proposals", label: "Proposals", icon: FileText },
+  { id: "voting", label: "Voting", icon: Vote },
+  { id: "transactions", label: "Transactions", icon: ArrowLeftRight },
+  { id: "settings", label: "Settings", icon: Settings },
 ] as const;
 
-const DashboardSidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: DashboardSidebarProps) => {
+const DashboardSidebar = ({
+  activeTab,
+  setActiveTab,
+  isOpen,
+  setIsOpen,
+}: DashboardSidebarProps) => {
   return (
     <motion.aside
       initial={false}
@@ -39,8 +44,8 @@ const DashboardSidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: Dashbo
         {/* Logo */}
         <div className="p-4 border-b border-border/50">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
-              <Shield className="w-5 h-5 text-background" />
+            <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0">
+              <img src="/logo.png" alt="ZKFund Logo" />
             </div>
             {isOpen && (
               <motion.span
@@ -62,8 +67,8 @@ const DashboardSidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }: Dashbo
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                 activeTab === item.id
-                  ? 'bg-primary/10 text-primary border border-primary/30'
-                  : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                  ? "bg-primary/10 text-primary border border-primary/30"
+                  : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
               }`}
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />

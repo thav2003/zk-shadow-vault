@@ -1,7 +1,6 @@
 {
   "name": "vite_react_shadcn_ts",
   "private": true,
-  "homepage": "https://thav2003.github.io/zk-shadow-vault/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

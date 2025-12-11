@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
 @layer base {
   :root {
@@ -44,9 +44,21 @@
     --circuit-line: 185 100% 50%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--neon-cyan)) 0%, hsl(var(--neon-pink)) 100%);
-    --gradient-glow: radial-gradient(circle, hsl(var(--neon-cyan) / 0.3) 0%, transparent 70%);
-    --gradient-card: linear-gradient(180deg, hsl(240 15% 10%) 0%, hsl(240 20% 6%) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--neon-cyan)) 0%,
+      hsl(var(--neon-pink)) 100%
+    );
+    --gradient-glow: radial-gradient(
+      circle,
+      hsl(var(--neon-cyan) / 0.3) 0%,
+      transparent 70%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(240 15% 10%) 0%,
+      hsl(240 20% 6%) 100%
+    );
 
     /* Shadows */
     --glow-cyan: 0 0 30px hsl(var(--neon-cyan) / 0.5);
@@ -62,15 +74,22 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Space Grotesk", sans-serif;
   }
 
-  code, pre, .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+  code,
+  pre,
+  .font-mono {
+    font-family: "JetBrains Mono", monospace;
   }
 }
 
@@ -104,41 +123,44 @@
   }
 
   @keyframes glitch-1 {
-    0% { transform: translateX(-2px); }
-    100% { transform: translateX(2px); }
+    0% {
+      transform: translateX(-2px);
+    }
+    100% {
+      transform: translateX(2px);
+    }
   }
 
   @keyframes glitch-2 {
-    0% { transform: translateX(2px); }
-    100% { transform: translateX(-2px); }
+    0% {
+      transform: translateX(2px);
+    }
+    100% {
+      transform: translateX(-2px);
+    }
   }
 
   /* Circuit glow */
   .circuit-glow {
-    box-shadow: 
-      0 0 5px hsl(var(--neon-cyan) / 0.5),
+    box-shadow: 0 0 5px hsl(var(--neon-cyan) / 0.5),
       0 0 20px hsl(var(--neon-cyan) / 0.3),
       inset 0 0 20px hsl(var(--neon-cyan) / 0.1);
   }
 
   /* Neon text */
   .neon-text {
-    text-shadow: 
-      0 0 10px hsl(var(--neon-cyan) / 0.8),
-      0 0 20px hsl(var(--neon-cyan) / 0.6),
-      0 0 40px hsl(var(--neon-cyan) / 0.4);
+    text-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.8),
+      0 0 20px hsl(var(--neon-cyan) / 0.6), 0 0 40px hsl(var(--neon-cyan) / 0.4);
   }
 
   .neon-text-pink {
-    text-shadow: 
-      0 0 10px hsl(var(--neon-pink) / 0.8),
-      0 0 20px hsl(var(--neon-pink) / 0.6),
-      0 0 40px hsl(var(--neon-pink) / 0.4);
+    text-shadow: 0 0 10px hsl(var(--neon-pink) / 0.8),
+      0 0 20px hsl(var(--neon-pink) / 0.6), 0 0 40px hsl(var(--neon-pink) / 0.4);
   }
 
   /* Scanline effect */
   .scanlines::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: repeating-linear-gradient(
@@ -153,9 +175,10 @@
 
   /* Data flow animation */
   .data-flow {
-    background: linear-gradient(90deg, 
-      transparent 0%, 
-      hsl(var(--neon-cyan)) 50%, 
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--neon-cyan)) 50%,
       transparent 100%
     );
     background-size: 200% 100%;
@@ -163,8 +186,12 @@
   }
 
   @keyframes dataFlow {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 
   /* Pulse ring */
@@ -203,8 +230,13 @@
   }
 
   @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
   }
 
   /* Gradient text */
@@ -233,14 +265,13 @@
   }
 
   .border-gradient::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     padding: 1px;
     border-radius: var(--radius);
     background: var(--gradient-primary);
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box, 
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -252,7 +283,7 @@
   }
 
   .noise::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");

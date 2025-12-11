@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: 'Features', href: '#features' },
-  { label: 'Architecture', href: '#architecture' },
-  { label: 'Use Cases', href: '#use-cases' },
-  { label: 'Docs', href: '#docs' },
+  { label: "Features", href: "#features" },
+  { label: "Architecture", href: "#architecture" },
+  { label: "Use Cases", href: "#use-cases" },
+  { label: "Docs", href: "#docs" },
 ];
 
 const Navbar = () => {
@@ -19,8 +19,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -30,17 +30,17 @@ const Navbar = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-background/80 backdrop-blur-xl border-b border-border/50' 
-            : 'bg-transparent'
+          isScrolled
+            ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
+            : "bg-transparent"
         }`}
       >
         <div className="container px-4">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <a href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="text-background font-bold text-sm">ZK</span>
+              <div className="w-14 h-14 rounded-lg flex items-center justify-center">
+                <img src="/logo.png" alt="ZKFund Logo" />
               </div>
               <span className="text-xl font-bold text-foreground">ZKFund</span>
             </a>
@@ -60,13 +60,11 @@ const Navbar = () => {
 
             {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <Button variant="ghost" size="sm">
+              {/* <Button variant="ghost" size="sm">
                 Connect Wallet
-              </Button>
+              </Button> */}
               <Button variant="neon" size="sm" asChild>
-                <Link to="/dashboard">
-                  Launch App
-                </Link>
+                <Link to="/dashboard">Launch App</Link>
               </Button>
             </div>
 
@@ -75,7 +73,11 @@ const Navbar = () => {
               className="md:hidden p-2 text-foreground"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -111,7 +113,10 @@ const Navbar = () => {
                     Connect Wallet
                   </Button>
                   <Button variant="glow" size="lg" className="w-full" asChild>
-                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link
+                      to="/dashboard"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
                       Launch App
                     </Link>
                   </Button>
