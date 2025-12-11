@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import GlitchText from './GlitchText';
 import { Shield, Lock, Zap } from 'lucide-react';
@@ -70,9 +71,11 @@ const HeroSection = () => {
             transition={{ delay: 0.8, duration: 0.5 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button variant="glow" size="xl">
-              Launch App
-              <Zap className="w-5 h-5" />
+            <Button variant="glow" size="xl" asChild>
+              <Link to="/dashboard">
+                Launch App
+                <Zap className="w-5 h-5" />
+              </Link>
             </Button>
             <Button variant="outline" size="xl">
               Read Docs
