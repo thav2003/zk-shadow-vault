@@ -8,6 +8,8 @@ import ProposalsSection from '@/components/dashboard/ProposalsSection';
 import VotingSection from '@/components/dashboard/VotingSection';
 import TransactionsSection from '@/components/dashboard/TransactionsSection';
 import SettingsSection from '@/components/dashboard/SettingsSection';
+import CreateFundModal from '@/components/dashboard/CreateFundModal';
+import CreateProposalModal from '@/components/dashboard/CreateProposalModal';
 
 export type DashboardTab = 'overview' | 'funds' | 'proposals' | 'voting' | 'transactions' | 'settings';
 
@@ -70,6 +72,10 @@ const Dashboard = () => {
           </main>
         </div>
       </div>
+
+      {/* Modals */}
+      <CreateFundModal />
+      <CreateProposalModal />
     </div>
   );
 };

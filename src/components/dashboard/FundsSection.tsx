@@ -12,13 +12,14 @@ import {
   PieChart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { mockFunds } from '@/lib/mockData';
+import { useDashboardStore } from '@/lib/dashboardStore';
 
 const FundsSection = () => {
+  const { funds, setCreateFundModalOpen } = useDashboardStore();
   const [selectedFund, setSelectedFund] = useState<string | null>(null);
   const [showBalances, setShowBalances] = useState(true);
 
-  const activeFund = mockFunds.find(f => f.id === selectedFund);
+  const activeFund = funds.find(f => f.id === selectedFund);
 
   return (
     <div className="space-y-6">
@@ -36,7 +37,7 @@ const FundsSection = () => {
           >
             {showBalances ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
           </Button>
-          <Button variant="glow">
+          <Button variant="glow" onClick={() => setCreateFundModalOpen(true)}>
             <Plus className="w-4 h-4" />
             Create Fund
           </Button>
@@ -46,7 +47,7 @@ const FundsSection = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Funds List */}
         <div className="lg:col-span-1 space-y-4">
-          {mockFunds.map((fund, i) => (
+          {funds.map((fund, i) => (
             <motion.div
               key={fund.id}
               initial={{ opacity: 0, x: -20 }}
@@ -152,24 +153,28 @@ const FundsSection = () => {
                   </div>
 
                   <div className="space-y-4">
-                    {activeFund.allocation.map((item, i) => (
-                      <div key={item.asset}>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-foreground">{item.asset}</span>
-                          <span className="text-sm font-mono text-muted-foreground">
-                            {showBalances ? `${item.percentage}%` : '••%'}
-                          </span>
+                    {activeFund.allocation.length > 0 ? (
+                      activeFund.allocation.map((item, i) => (
+                        <div key={item.asset}>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-foreground">{item.asset}</span>
+                            <span className="text-sm font-mono text-muted-foreground">
+                              {showBalances ? `${item.percentage}%` : '••%'}
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full bg-muted/50 overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: `${item.percentage}%` }}
+                              transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                              className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
+                            />
+                          </div>
                         </div>
-                        <div className="h-2 rounded-full bg-muted/50 overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${item.percentage}%` }}
-                            transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                            className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-                          />
-                        </div>
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <p className="text-center text-muted-foreground py-4">No allocations yet</p>
+                    )}
                   </div>
                 </div>
 

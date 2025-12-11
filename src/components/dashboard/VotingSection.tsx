@@ -9,16 +9,17 @@ import {
   Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { mockVotes } from '@/lib/mockData';
+import { useDashboardStore } from '@/lib/dashboardStore';
 
 const VotingSection = () => {
+  const { votes, castVote } = useDashboardStore();
   const [selectedVote, setSelectedVote] = useState<string | null>(null);
   const [votingChoice, setVotingChoice] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showProof, setShowProof] = useState(false);
 
   const handleVote = async () => {
-    if (!votingChoice) return;
+    if (!votingChoice || !selectedVote) return;
     setIsSubmitting(true);
     
     // Simulate ZK proof generation
@@ -26,6 +27,9 @@ const VotingSection = () => {
     setShowProof(true);
     
     await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    castVote(selectedVote, votingChoice);
+    
     setIsSubmitting(false);
     setShowProof(false);
     setSelectedVote(null);
@@ -62,7 +66,7 @@ const VotingSection = () => {
 
       {/* Votes Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {mockVotes.map((vote, i) => (
+        {votes.map((vote, i) => (
           <motion.div
             key={vote.id}
             initial={{ opacity: 0, y: 20 }}
