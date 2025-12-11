@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  User, 
-  Shield, 
-  Bell, 
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  User,
+  Shield,
+  Bell,
   Key,
   Wallet,
   Globe,
   Moon,
-  Check
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
+  Check,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const SettingsSection = () => {
   const [notifications, setNotifications] = useState({
@@ -28,11 +28,13 @@ const SettingsSection = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-3xl">
+    <div className="space-y-6">
       {/* Header */}
       <div>
         <h2 className="text-2xl font-bold text-foreground">Settings</h2>
-        <p className="text-muted-foreground">Manage your account and preferences</p>
+        <p className="text-muted-foreground">
+          Manage your account and preferences
+        </p>
       </div>
 
       {/* Profile Section */}
@@ -54,15 +56,21 @@ const SettingsSection = () => {
               </div>
               <div>
                 <p className="font-medium text-foreground">Anonymous User</p>
-                <p className="text-sm text-muted-foreground font-mono">zkid_0x7a3d...8f2e</p>
+                <p className="text-sm text-muted-foreground font-mono">
+                  zkid_0x7a3d...8f2e
+                </p>
               </div>
             </div>
-            <Button variant="outline" size="sm">Edit</Button>
+            <Button variant="outline" size="sm">
+              Edit
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">Display Name</label>
+              <label className="block text-sm text-muted-foreground mb-2">
+                Display Name
+              </label>
               <input
                 type="text"
                 placeholder="Anonymous"
@@ -70,7 +78,9 @@ const SettingsSection = () => {
               />
             </div>
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">Email (Optional)</label>
+              <label className="block text-sm text-muted-foreground mb-2">
+                Email (Optional)
+              </label>
               <input
                 type="email"
                 placeholder="For notifications only"
@@ -101,11 +111,15 @@ const SettingsSection = () => {
               </div>
               <div>
                 <p className="font-mono text-foreground">0x7a3d...8f2e</p>
-                <p className="text-xs text-muted-foreground">MetaMask • Primary</p>
+                <p className="text-xs text-muted-foreground">
+                  MetaMask • Primary
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="px-2 py-1 rounded-full bg-green-500/10 text-green-500 text-xs">Connected</span>
+              <span className="px-2 py-1 rounded-full bg-green-500/10 text-green-500 text-xs">
+                Connected
+              </span>
             </div>
           </div>
 
@@ -134,16 +148,18 @@ const SettingsSection = () => {
               <div>
                 <p className="font-medium text-foreground capitalize">{key}</p>
                 <p className="text-sm text-muted-foreground">
-                  {key === 'proposals' && 'Get notified about new proposals'}
-                  {key === 'votes' && 'Reminders for active votes'}
-                  {key === 'transactions' && 'Transaction confirmations'}
-                  {key === 'security' && 'Security alerts and warnings'}
+                  {key === "proposals" && "Get notified about new proposals"}
+                  {key === "votes" && "Reminders for active votes"}
+                  {key === "transactions" && "Transaction confirmations"}
+                  {key === "security" && "Security alerts and warnings"}
                 </p>
               </div>
               <button
-                onClick={() => setNotifications(n => ({ ...n, [key]: !value }))}
+                onClick={() =>
+                  setNotifications((n) => ({ ...n, [key]: !value }))
+                }
                 className={`w-12 h-6 rounded-full transition-colors relative ${
-                  value ? 'bg-primary' : 'bg-muted'
+                  value ? "bg-primary" : "bg-muted"
                 }`}
               >
                 <motion.div
@@ -171,26 +187,40 @@ const SettingsSection = () => {
         <div className="space-y-4">
           <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
             <div>
-              <p className="font-medium text-foreground">Two-Factor Authentication</p>
-              <p className="text-sm text-muted-foreground">Add extra security to your account</p>
+              <p className="font-medium text-foreground">
+                Two-Factor Authentication
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Add extra security to your account
+              </p>
             </div>
-            <Button variant="outline" size="sm">Enable</Button>
+            <Button variant="outline" size="sm">
+              Enable
+            </Button>
           </div>
 
           <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
             <div>
               <p className="font-medium text-foreground">Session Management</p>
-              <p className="text-sm text-muted-foreground">View and manage active sessions</p>
+              <p className="text-sm text-muted-foreground">
+                View and manage active sessions
+              </p>
             </div>
-            <Button variant="outline" size="sm">Manage</Button>
+            <Button variant="outline" size="sm">
+              Manage
+            </Button>
           </div>
 
           <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
             <div>
               <p className="font-medium text-foreground">ZK Identity Backup</p>
-              <p className="text-sm text-muted-foreground">Export your ZK identity keys</p>
+              <p className="text-sm text-muted-foreground">
+                Export your ZK identity keys
+              </p>
             </div>
-            <Button variant="outline" size="sm">Export</Button>
+            <Button variant="outline" size="sm">
+              Export
+            </Button>
           </div>
         </div>
       </motion.div>
@@ -213,10 +243,14 @@ const SettingsSection = () => {
               <Moon className="w-5 h-5 text-muted-foreground" />
               <div>
                 <p className="font-medium text-foreground">Dark Mode</p>
-                <p className="text-sm text-muted-foreground">Always on for maximum privacy</p>
+                <p className="text-sm text-muted-foreground">
+                  Always on for maximum privacy
+                </p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">Always On</span>
+            <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+              Always On
+            </span>
           </div>
         </div>
       </motion.div>
@@ -230,7 +264,7 @@ const SettingsSection = () => {
               Saved!
             </>
           ) : (
-            'Save Changes'
+            "Save Changes"
           )}
         </Button>
       </div>
