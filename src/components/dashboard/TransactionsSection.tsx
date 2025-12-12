@@ -10,7 +10,7 @@ import {
   Filter
 } from 'lucide-react';
 import { useState } from 'react';
-import { mockTransactions } from '@/lib/mockData';
+import { useDashboardStore } from '@/lib/dashboardStore';
 
 const typeIcons: Record<string, any> = {
   deposit: ArrowDownLeft,
@@ -33,6 +33,7 @@ const statusColors: Record<string, string> = {
 };
 
 const TransactionsSection = () => {
+  const { transactions } = useDashboardStore();
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>('all');
 
@@ -42,7 +43,7 @@ const TransactionsSection = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const filteredTx = mockTransactions.filter(tx => {
+  const filteredTx = transactions.filter(tx => {
     if (filter === 'all') return true;
     return tx.type === filter;
   });
@@ -53,7 +54,7 @@ const TransactionsSection = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Transaction History</h2>
-          <p className="text-muted-foreground">All private transactions with ZK proofs</p>
+          <p className="text-muted-foreground">All private transactions with ZK proofs ({transactions.length} total)</p>
         </div>
         <div className="flex items-center gap-2">
           <Filter className="w-4 h-4 text-muted-foreground" />
@@ -89,79 +90,87 @@ const TransactionsSection = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredTx.map((tx, i) => {
-                const Icon = typeIcons[tx.type];
-                return (
-                  <motion.tr
-                    key={tx.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="border-b border-border/30 hover:bg-muted/20 transition-colors"
-                  >
-                    <td className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${typeColors[tx.type]}`}>
-                          <Icon className="w-5 h-5" />
+              {filteredTx.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="p-8 text-center text-muted-foreground">
+                    No transactions found
+                  </td>
+                </tr>
+              ) : (
+                filteredTx.map((tx, i) => {
+                  const Icon = typeIcons[tx.type] || Layers;
+                  return (
+                    <motion.tr
+                      key={tx.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      className="border-b border-border/30 hover:bg-muted/20 transition-colors"
+                    >
+                      <td className="p-4">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${typeColors[tx.type] || 'text-primary bg-primary/10'}`}>
+                            <Icon className="w-5 h-5" />
+                          </div>
+                          <span className="font-medium text-foreground capitalize">{tx.type}</span>
                         </div>
-                        <span className="font-medium text-foreground capitalize">{tx.type}</span>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <div className="font-mono">
-                        <span className="text-foreground">
-                          {tx.amount.toLocaleString()} {tx.asset}
-                        </span>
-                        {tx.toAsset && (
-                          <span className="text-muted-foreground">
-                            {' → '}{tx.toAmount?.toLocaleString()} {tx.toAsset}
+                      </td>
+                      <td className="p-4">
+                        <div className="font-mono">
+                          <span className="text-foreground">
+                            {tx.amount.toLocaleString()} {tx.asset}
                           </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4 hidden md:table-cell">
-                      <span className="text-muted-foreground">{tx.fundName}</span>
-                    </td>
-                    <td className="p-4 hidden lg:table-cell">
-                      <div className="flex items-center gap-2 font-mono text-sm">
-                        <span className="text-muted-foreground">{tx.from}</span>
-                        <span className="text-primary">→</span>
-                        <span className="text-muted-foreground">{tx.to}</span>
-                      </div>
-                    </td>
-                    <td className="p-4">
-                      <button
-                        onClick={() => handleCopy(tx.proofHash, tx.id)}
-                        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors group"
-                      >
-                        <span className="font-mono text-xs text-primary">{tx.proofHash}</span>
-                        {copiedId === tx.id ? (
-                          <Check className="w-3 h-3 text-green-500" />
-                        ) : (
-                          <Copy className="w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                        )}
-                      </button>
-                    </td>
-                    <td className="p-4">
-                      <div className="flex items-center gap-2">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[tx.status]}`}>
-                          {tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
-                        </span>
-                        {tx.signatures && (
-                          <span className="text-xs text-muted-foreground font-mono">
-                            ({tx.signatures})
+                          {tx.toAsset && (
+                            <span className="text-muted-foreground">
+                              {' → '}{tx.toAmount?.toLocaleString()} {tx.toAsset}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-4 hidden md:table-cell">
+                        <span className="text-muted-foreground">{tx.fundName}</span>
+                      </td>
+                      <td className="p-4 hidden lg:table-cell">
+                        <div className="flex items-center gap-2 font-mono text-sm">
+                          <span className="text-muted-foreground">{tx.from}</span>
+                          <span className="text-primary">→</span>
+                          <span className="text-muted-foreground">{tx.to}</span>
+                        </div>
+                      </td>
+                      <td className="p-4">
+                        <button
+                          onClick={() => handleCopy(tx.proofHash, tx.id)}
+                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors group"
+                        >
+                          <span className="font-mono text-xs text-primary">{tx.proofHash}</span>
+                          {copiedId === tx.id ? (
+                            <Check className="w-3 h-3 text-green-500" />
+                          ) : (
+                            <Copy className="w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                          )}
+                        </button>
+                      </td>
+                      <td className="p-4">
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[tx.status] || statusColors.pending}`}>
+                            {tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
                           </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="p-4 hidden md:table-cell">
-                      <span className="text-sm text-muted-foreground">
-                        {new Date(tx.timestamp).toLocaleString()}
-                      </span>
-                    </td>
-                  </motion.tr>
-                );
-              })}
+                          {tx.signatures && (
+                            <span className="text-xs text-muted-foreground font-mono">
+                              ({tx.signatures})
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-4 hidden md:table-cell">
+                        <span className="text-sm text-muted-foreground">
+                          {new Date(tx.timestamp).toLocaleString()}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
