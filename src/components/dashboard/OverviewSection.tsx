@@ -9,8 +9,9 @@ import {
   Activity,
   Lock
 } from 'lucide-react';
-import { mockStats, mockActivity, mockChartData, mockFunds } from '@/lib/mockData';
+import { useDashboardStore } from '@/lib/dashboardStore';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { mockChartData } from '@/lib/mockData';
 
 const StatCard = ({ 
   icon: Icon, 
@@ -51,6 +52,11 @@ const StatCard = ({
 );
 
 const OverviewSection = () => {
+  const { stats, activity, funds } = useDashboardStore();
+
+  // Calculate dynamic TVL from funds
+  const totalTVL = funds.reduce((sum, fund) => sum + fund.tvl, 0);
+
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
@@ -58,24 +64,24 @@ const OverviewSection = () => {
         <StatCard 
           icon={Wallet} 
           label="Total Value Locked" 
-          value={`$${(mockStats.totalTVL / 1000000).toFixed(1)}M`}
+          value={`$${(totalTVL / 1000000).toFixed(1)}M`}
           change={8.5}
         />
         <StatCard 
           icon={Vote} 
           label="Active Proposals" 
-          value={mockStats.activeProposals}
+          value={stats.activeProposals}
         />
         <StatCard 
           icon={Shield} 
           label="ZK Proofs Generated" 
-          value={mockStats.zkProofsGenerated}
+          value={stats.zkProofsGenerated}
           change={12.3}
         />
         <StatCard 
           icon={Lock} 
           label="Private Transactions" 
-          value={mockStats.privateTransactions}
+          value={stats.privateTransactions}
           change={5.7}
         />
       </div>
@@ -165,9 +171,9 @@ const OverviewSection = () => {
             <h3 className="text-lg font-bold text-foreground">Recent Activity</h3>
           </div>
           <div className="space-y-4">
-            {mockActivity.map((item, i) => (
+            {activity.slice(0, 5).map((item, i) => (
               <motion.div
-                key={i}
+                key={`${item.action}-${i}`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + i * 0.1 }}
@@ -197,11 +203,11 @@ const OverviewSection = () => {
             <Users className="w-5 h-5 text-primary" />
             <h3 className="text-lg font-bold text-foreground">Your Funds</h3>
           </div>
-          <span className="text-sm text-muted-foreground">{mockFunds.length} active</span>
+          <span className="text-sm text-muted-foreground">{funds.length} active</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {mockFunds.map((fund, i) => (
+          {funds.slice(0, 3).map((fund, i) => (
             <motion.div
               key={fund.id}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -213,8 +219,12 @@ const OverviewSection = () => {
                 <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
                   {fund.name}
                 </h4>
-                <span className="px-2 py-1 text-xs rounded-full bg-green-500/10 text-green-500">
-                  Active
+                <span className={`px-2 py-1 text-xs rounded-full ${
+                  fund.status === 'active' 
+                    ? 'bg-green-500/10 text-green-500' 
+                    : 'bg-yellow-500/10 text-yellow-500'
+                }`}>
+                  {fund.status === 'active' ? 'Active' : fund.status}
                 </span>
               </div>
               <p className="text-2xl font-bold text-foreground mb-1">
