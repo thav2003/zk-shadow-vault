@@ -12,12 +12,16 @@ import {
   PieChart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useDashboardStore } from '@/lib/dashboardStore';
+import { useDashboardStore, Fund } from '@/lib/dashboardStore';
+import DepositModal from './DepositModal';
+import WithdrawModal from './WithdrawModal';
 
 const FundsSection = () => {
   const { funds, setCreateFundModalOpen } = useDashboardStore();
   const [selectedFund, setSelectedFund] = useState<string | null>(null);
   const [showBalances, setShowBalances] = useState(true);
+  const [isDepositOpen, setIsDepositOpen] = useState(false);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const activeFund = funds.find(f => f.id === selectedFund);
 
@@ -180,7 +184,11 @@ const FundsSection = () => {
 
                 {/* Actions */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <Button variant="outline" className="h-auto py-4 flex-col gap-2">
+                  <Button 
+                    variant="outline" 
+                    className="h-auto py-4 flex-col gap-2"
+                    onClick={() => setIsDepositOpen(true)}
+                  >
                     <Plus className="w-5 h-5" />
                     <span>Deposit</span>
                   </Button>
@@ -188,7 +196,11 @@ const FundsSection = () => {
                     <TrendingUp className="w-5 h-5" />
                     <span>Swap</span>
                   </Button>
-                  <Button variant="outline" className="h-auto py-4 flex-col gap-2">
+                  <Button 
+                    variant="outline" 
+                    className="h-auto py-4 flex-col gap-2"
+                    onClick={() => setIsWithdrawOpen(true)}
+                  >
                     <Lock className="w-5 h-5" />
                     <span>Withdraw</span>
                   </Button>
@@ -197,6 +209,18 @@ const FundsSection = () => {
                     <span>Manage</span>
                   </Button>
                 </div>
+
+                {/* Modals */}
+                <DepositModal 
+                  isOpen={isDepositOpen} 
+                  onClose={() => setIsDepositOpen(false)} 
+                  fund={activeFund} 
+                />
+                <WithdrawModal 
+                  isOpen={isWithdrawOpen} 
+                  onClose={() => setIsWithdrawOpen(false)} 
+                  fund={activeFund} 
+                />
               </motion.div>
             ) : (
               <motion.div
